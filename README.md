@@ -4,6 +4,7 @@ Student performance is influenced by multiple academic and behavioral factors.
 Faculty may find it difficult to identify students who are at risk at an early stage.
 A data-driven system can help predict student performance.
 The system can provide recommendations for improving student outcomes.
+
 2. Proposed Solution
 Collect student-related information.
 Process the entered data.
@@ -11,6 +12,7 @@ Use a Machine Learning model to predict performance.
 Classify students based on predicted performance.
 Generate intelligent recommendations.
 Display the results through a user-friendly Tkinter interface.
+
 3. Process Flow
 
 Start
@@ -31,6 +33,7 @@ Display Result
 ↓
 End
 
+
 4. Project Mapping
 V-Model Stage	Smart Student Project
 Requirement Analysis	Identify student performance problem
@@ -40,12 +43,14 @@ Integration	Integrate UI, ML and AI
 Testing	Test individual modules and complete system
 Validation	Check system against requirements
 Demonstration	Present working capstone
+
 5. Project – Modular Application Development
 Create separate functions:
 get_student_data()
 calculate_average()
 calculate_performance()
 display_result()
+
 6. Requirement Analysis
 Identify the User
 
@@ -55,6 +60,7 @@ Faculty
 Academic coordinators
 Mentors
 Students
+
 7. User Requirement
 The user should be able to:
 Enter student information.
@@ -62,6 +68,7 @@ Submit the information for analysis.
 View predicted performance.
 Understand the student's risk level.
 Receive improvement recommendations.
+
 8. Identify System Inputs
 The initial system can use:
 Student ID
@@ -78,12 +85,14 @@ Study Hours	4 hours/day
 Internal Marks	76%
 Assignment Completion	90%
 Previous Performance	72%
+
 9. Identify System Outputs
 Performance Prediction
 Excellent
 Good
 Average
 At Risk
+
 10. Additional Output
 Prediction score/probability
 Risk level
@@ -94,6 +103,7 @@ Example:
 Prediction: Good Performance
 Risk Level: Low
 Recommendation: Maintain current study pattern and attendance
+
 
 11. Functional Requirements
 The system should:
@@ -107,6 +117,7 @@ Generate recommendations.
 Display results through the GUI.
 Handle invalid inputs.
 Provide a reset/clear option.
+
 12. Non-Functional Requirements
 The application should be:
 User-friendly
