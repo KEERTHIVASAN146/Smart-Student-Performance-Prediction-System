@@ -153,8 +153,83 @@ flowchart TD
 
 ## 13. Proposed System Architecture
 
-<img width="300" height="500" alt="NoteGPT-Flowchart-1787063267494" src="https://github.com/user-attachments/assets/5bb2c16b-672b-4cd9-8c97-ce604971480a" />
+The Smart Student Performance Prediction System is a desktop-based application developed using Python and Tkinter. The system collects student details and academic information, processes the input using a weighted performance scoring algorithm, and generates a performance prediction, risk level, and personalized recommendation.
 
+### Architecture Overview
+
+
+                    ┌──────────────────────────────┐
+                    │          USER                │
+                    │       (Student / Staff)      │
+                    └──────────────┬───────────────┘
+                                   │
+                                   │ Enter Details
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │      TKINTER GUI             │
+                    │                              │
+                    │  • Student Information       │
+                    │  • Academic Information      │
+                    │  • Prediction Button         │
+                    │  • Clear / Exit              │
+                    └──────────────┬───────────────┘
+                                   │
+                                   │ Input Data
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │     INPUT VALIDATION         │
+                    │                              │
+                    │  • Check Empty Fields        │
+                    │  • Validate Numeric Values   │
+                    │  • Range Validation           │
+                    └──────────────┬───────────────┘
+                                   │
+                                   │ Valid Data
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │   PERFORMANCE PROCESSING     │
+                    │                              │
+                    │  Attendance        → 20%     │
+                    │  Study Hours      → 20%      │
+                    │  Internal Marks   → 40%      │
+                    │  Assignments      → 20%      │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │   PERFORMANCE SCORE          │
+                    │                              │
+                    │ Current Performance           │
+                    │            +                 │
+                    │ Previous Performance (20%)   │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │    PREDICTION ENGINE         │
+                    │                              │
+                    │  Score ≥ 80 → EXCELLENT     │
+                    │  Score ≥ 65 → GOOD          │
+                    │  Score ≥ 50 → AVERAGE       │
+                    │  Score < 50 → AT RISK       │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │       RESULT GENERATION      │
+                    │                              │
+                    │  • Performance Prediction    │
+                    │  • Risk Level                │
+                    │  • Performance Score         │
+                    │  • Recommendation            │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │       RESULT DISPLAY         │
+                    │                              │
+                    │     Tkinter Result Panel     │
+                    └──────────────────────────────┘
 ## 14. UI Design Requirements
 
 The application should contain 
@@ -190,4 +265,5 @@ flowchart TD
     C --> D[Python processing starts]
 ```
 ## 18. Requirements Design
-<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/2dd4736f-da4c-4cde-b9e2-c7bedd3403c1" />
+
+<img width="1191" height="919" alt="Screenshot 2026-08-19 095901" src="https://github.com/user-attachments/assets/a22c8466-f269-449a-9ebc-66adc141f73e" />
