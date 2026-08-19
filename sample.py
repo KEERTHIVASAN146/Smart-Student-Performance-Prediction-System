@@ -1,79 +1,86 @@
-# Smart Student Performance Prediction System
-# Day 1 Prototype
+import tkinter as tk
+root = tk.Tk()
+from tkinter import messagebox
+root.title("Smart Student Performance Prediction System")
+root.geometry("400x400")
+def submit():
+    first = entry_first.get()
+    last = entry_last.get()
+    messagebox.showinfo("Submitted")
 
-print("==============================================")
-print("  SMART STUDENT PERFORMANCE PREDICTION SYSTEM")
-print("==============================================")
+# Heading1
+heading1 = tk.Label(root, text="SMART STUDENT PERFORMANCE PREDICTION SYSTEM",
+                   font=("Arial", 14, "bold"))
+heading1.grid(row=0, column=8, columnspan=2, pady=10)
 
-# Get student details
-student_name = input("Enter Student Name: ")
+# Heading2
+heading2 = tk.Label(root, text="Student Information",
+                   font=("Arial", 12, "bold"))
+heading2.grid(row=1, column=3, columnspan=2, pady=10)
 
-attendance = float(input("Enter Attendance (%): "))
+# First Name
+tk.Label(root, text="Student ID",font=("Arial", 12)).grid(row=2, column=3, padx=10, pady=5, sticky="w")
+entry_first = tk.Entry(root, width=30)
+entry_first.grid(row=2, column=4, padx=10, pady=5)
 
-study_hours = float(input("Enter Study Hours per Day: "))
+# Last Name
+tk.Label(root, text="Name",font=("Arial", 12)).grid(row=3, column=3, padx=10, pady=5, sticky="w")
+entry_last = tk.Entry(root, width=30)
+entry_last.grid(row=3, column=4, padx=10, pady=5)
 
-internal_marks = float(input("Enter Internal Marks (%): "))
+# Heading2
 
-assignment_completion = float(
-    input("Enter Assignment Completion (%): ")
-)
+heading3 = tk.Label(root, text="Academic Information",
+                   font=("Arial", 12, "bold"))
+heading3.grid(row=1, column=15, columnspan=2, pady=10)
 
-# Convert study hours into a score
-study_hours_score = min((study_hours / 8) * 100, 100)
+# First Name
+tk.Label(root, text="Attendance",font=("Arial", 12)).grid(row=2, column=14, padx=10, pady=5, sticky="w")
+entry_first = tk.Entry(root, width=30)
+entry_first.grid(row=2, column=15, padx=10, pady=5)
 
-# Calculate performance score
-performance_score = (
-    attendance * 0.20
-    + study_hours_score * 0.20
-    + internal_marks * 0.40
-    + assignment_completion * 0.20
-)
+# Last Name
+tk.Label(root, text="Study Hours",font=("Arial", 12)).grid(row=3, column=14, padx=10, pady=5, sticky="w")
+entry_last = tk.Entry(root, width=30)
+entry_last.grid(row=3, column=15, padx=10, pady=5)
+# First Name
+tk.Label(root, text="Internal Marks",font=("Arial", 12)).grid(row=4, column=14, padx=10, pady=5, sticky="w")
+entry_first = tk.Entry(root, width=30)
+entry_first.grid(row=4, column=15, padx=10, pady=5)
 
-# Determine performance level
-if performance_score >= 80:
-    performance_level = "EXCELLENT"
+# Last Name
+tk.Label(root, text="Assignment Completion",font=("Arial", 12)).grid(row=5, column=14, padx=10, pady=5, sticky="w")
+entry_last = tk.Entry(root, width=30)
+entry_last.grid(row=5, column=15, padx=10, pady=5)
+# First Name
+tk.Label(root, text="Previous Performance",font=("Arial", 12)).grid(row=6, column=14, padx=10, pady=5, sticky="w")
+entry_first = tk.Entry(root, width=30)
+entry_first.grid(row=6, column=15, padx=10, pady=5)
 
-elif performance_score >= 65:
-    performance_level = "GOOD"
+# Button
+submit_btn = tk.Button(root, text="Predict Performance", command=submit,bg="blue",fg="white")
+submit_btn.grid(row=9, column=6, columnspan=2, pady=15)
 
-elif performance_score >= 50:
-    performance_level = "AVERAGE"
+# Button
+submit_btn = tk.Button(root, text="Clear", command=submit,bg="green",fg="white")
+submit_btn.grid(row=9, column=8, columnspan=2, pady=15)
+# Button
+submit_btn = tk.Button(root, text="Exit", command=submit,bg="red",fg="white")
+submit_btn.grid(row=9, column=10, columnspan=2, pady=15)
 
-else:
-    performance_level = "AT RISK"
+heading2 = tk.Label(root, text="Predicted Result",
+                   font=("Arial", 12, "bold"))
+heading2.grid(row=11, column=8, columnspan=2, pady=10)
 
-# Generate recommendation
-if performance_level == "EXCELLENT":
-    recommendation = (
-        "Excellent performance. Maintain your current study "
-        "pattern and continue regular practice."
-    )
+# Output Box (Label)
 
-elif performance_level == "GOOD":
-    recommendation = (
-        "Maintain attendance and continue regular study."
-    )
+output_label = tk.Label(root, text="Prediction:", font=("Arial", 12), fg="black", justify="left")
+output_label.grid(row=12, column=8, columnspan=2, pady=10)
 
-elif performance_level == "AVERAGE":
-    recommendation = (
-        "Increase study hours, improve assignment completion, "
-        "and focus on internal assessments."
-    )
+output_label = tk.Label(root, text="Risk Level:", font=("Arial", 12), fg="black", justify="left")
+output_label.grid(row=13, column=8, columnspan=2, pady=10)
 
-else:
-    recommendation = (
-        "Improve attendance, increase study hours, complete "
-        "assignments regularly, and seek academic guidance."
-    )
+output_label = tk.Label(root, text="Recommendation:", font=("Arial", 12), fg="black", justify="left")
+output_label.grid(row=14, column=8, columnspan=2, pady=10)
 
-# Display result
-print("\n==============================================")
-print("          STUDENT PERFORMANCE RESULT")
-print("==============================================")
-
-print("Student Name:", student_name)
-print("Performance Score:", round(performance_score, 2))
-print("Performance Level:", performance_level)
-print("Recommendation:", recommendation)
-
-print("==============================================")
+root.mainloop()
