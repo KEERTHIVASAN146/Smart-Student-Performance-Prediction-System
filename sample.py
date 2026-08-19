@@ -2,266 +2,378 @@ import tkinter as tk
 from tkinter import messagebox
 
 
-# =========================
-# Main Window
-# =========================
+# MAIN WINDOW
 
 root = tk.Tk()
 root.title("Smart Student Performance Prediction System")
 root.geometry("950x700")
-root.configure(bg="#f2f4f7")
+root.configure(bg="#EAF2F8")
 root.resizable(False, False)
 
 
-# =========================
-# Colors
-# =========================
+# COLORS
 
-BG_COLOR = "#f2f4f7"
-WHITE = "#ffffff"
-DARK = "#263238"
-BLUE = "#1976d2"
-GREEN = "#2e7d32"
-RED = "#d32f2f"
-LIGHT_BLUE = "#e3f2fd"
-LIGHT_GREEN = "#e8f5e9"
-LIGHT_RED = "#ffebee"
-BORDER = "#d0d7de"
+BG_COLOR = "#EAF2F8"
+WHITE = "#FFFFFF"
+
+DARK = "#17202A"
+GRAY = "#607D8B"
+
+BLUE = "#1565C0"
+LIGHT_BLUE = "#D6EAF8"
+
+PURPLE = "#6A1B9A"
+LIGHT_PURPLE = "#E8DAEF"
+
+GREEN = "#2E7D32"
+LIGHT_GREEN = "#D5F5E3"
+
+ORANGE = "#EF6C00"
+LIGHT_ORANGE = "#FDEBD0"
+
+RED = "#C62828"
+LIGHT_RED = "#FADBD8"
+
+BORDER = "#AAB7B8"
 
 
-# =========================
-# Functions
-# =========================
+# PREDICTION FUNCTION
 
 def submit():
+
     student_id = entry_student_id.get().strip()
     name = entry_name.get().strip()
+
     attendance = entry_attendance.get().strip()
     study_hours = entry_study_hours.get().strip()
     internal_marks = entry_internal_marks.get().strip()
     assignment = entry_assignment.get().strip()
     previous_performance = entry_previous_performance.get().strip()
 
-    # Check empty fields
-    if not all([
-        student_id,
-        name,
-        attendance,
-        study_hours,
-        internal_marks,
-        assignment,
-        previous_performance
-    ]):
+    # Check Empty Fields
+
+    if not student_id or not name or not attendance or not study_hours \
+            or not internal_marks or not assignment or not previous_performance:
+
         messagebox.showerror(
             "Missing Information",
             "Please enter all student and academic details."
         )
+
         return
 
+    # Convert Values
+
     try:
+
         attendance = float(attendance)
         study_hours = float(study_hours)
         internal_marks = float(internal_marks)
         assignment = float(assignment)
         previous_performance = float(previous_performance)
 
-        # Validation
-        if not 0 <= attendance <= 100:
-            messagebox.showerror(
-                "Invalid Input",
-                "Attendance must be between 0 and 100."
-            )
-            return
-
-        if not 0 <= study_hours <= 24:
-            messagebox.showerror(
-                "Invalid Input",
-                "Study Hours must be between 0 and 24."
-            )
-            return
-
-        if not 0 <= internal_marks <= 100:
-            messagebox.showerror(
-                "Invalid Input",
-                "Internal Marks must be between 0 and 100."
-            )
-            return
-
-        if not 0 <= assignment <= 100:
-            messagebox.showerror(
-                "Invalid Input",
-                "Assignment Completion must be between 0 and 100."
-            )
-            return
-
-        if not 0 <= previous_performance <= 100:
-            messagebox.showerror(
-                "Invalid Input",
-                "Previous Performance must be between 0 and 100."
-            )
-            return
-
-        # =========================
-        # Prediction Calculation
-        # =========================
-
-        study_hours_score = min((study_hours / 8) * 100, 100)
-
-        performance_score = (
-            attendance * 0.20
-            + study_hours_score * 0.20
-            + internal_marks * 0.40
-            + assignment * 0.20
-        )
-
-        final_score = (
-            performance_score * 0.80
-            + previous_performance * 0.20
-        )
-
-        # =========================
-        # Prediction
-        # =========================
-
-        if final_score >= 80:
-            performance = "EXCELLENT"
-            risk = "LOW"
-            recommendation = (
-                "Maintain your current study pattern "
-                "and continue regular practice."
-            )
-
-            result_frame.configure(bg=LIGHT_GREEN)
-            output_prediction.configure(bg=LIGHT_GREEN, fg=GREEN)
-            output_risk.configure(bg=LIGHT_GREEN, fg=GREEN)
-            output_recommendation.configure(bg=LIGHT_GREEN, fg=DARK)
-
-        elif final_score >= 65:
-            performance = "GOOD"
-            risk = "LOW"
-            recommendation = (
-                "Maintain good attendance and continue "
-                "regular study."
-            )
-
-            result_frame.configure(bg=LIGHT_BLUE)
-            output_prediction.configure(bg=LIGHT_BLUE, fg=BLUE)
-            output_risk.configure(bg=LIGHT_BLUE, fg=BLUE)
-            output_recommendation.configure(bg=LIGHT_BLUE, fg=DARK)
-
-        elif final_score >= 50:
-            performance = "AVERAGE"
-            risk = "MEDIUM"
-            recommendation = (
-                "Increase study hours and improve "
-                "assignment completion."
-            )
-
-            result_frame.configure(bg="#fff8e1")
-            output_prediction.configure(bg="#fff8e1", fg="#f57c00")
-            output_risk.configure(bg="#fff8e1", fg="#f57c00")
-            output_recommendation.configure(bg="#fff8e1", fg=DARK)
-
-        else:
-            performance = "AT RISK"
-            risk = "HIGH"
-            recommendation = (
-                "Improve attendance, study hours, "
-                "and assignment completion."
-            )
-
-            result_frame.configure(bg=LIGHT_RED)
-            output_prediction.configure(bg=LIGHT_RED, fg=RED)
-            output_risk.configure(bg=LIGHT_RED, fg=RED)
-            output_recommendation.configure(bg=LIGHT_RED, fg=DARK)
-
-        # =========================
-        # Display Result
-        # =========================
-
-        output_prediction.config(
-            text=f"Prediction: {performance}\n"
-                 f"Performance Score: {final_score:.2f}%"
-        )
-
-        output_risk.config(
-            text=f"Risk Level: {risk}"
-        )
-
-        output_recommendation.config(
-            text=f"Recommendation:\n{recommendation}"
-        )
-
     except ValueError:
+
         messagebox.showerror(
             "Invalid Input",
             "Please enter valid numeric values."
         )
 
+        return
+
+    # Validation
+
+    if not 0 <= attendance <= 100:
+
+        messagebox.showerror(
+            "Invalid Attendance",
+            "Attendance must be between 0 and 100."
+        )
+
+        return
+
+    if not 0 <= study_hours <= 24:
+
+        messagebox.showerror(
+            "Invalid Study Hours",
+            "Study Hours must be between 0 and 24."
+        )
+
+        return
+
+    if not 0 <= internal_marks <= 100:
+
+        messagebox.showerror(
+            "Invalid Internal Marks",
+            "Internal Marks must be between 0 and 100."
+        )
+
+        return
+
+    if not 0 <= assignment <= 100:
+
+        messagebox.showerror(
+            "Invalid Assignment",
+            "Assignment Completion must be between 0 and 100."
+        )
+
+        return
+
+    if not 0 <= previous_performance <= 100:
+
+        messagebox.showerror(
+            "Invalid Performance",
+            "Previous Performance must be between 0 and 100."
+        )
+
+        return
+
+    # PERFORMANCE CALCULATION
+
+    # Convert study hours into a score.
+    # 8 hours/day = 100 score.
+
+    study_hours_score = min(
+        (study_hours / 8) * 100,
+        100
+    )
+
+    # Current performance score
+
+    performance_score = (
+        attendance * 0.20
+        + study_hours_score * 0.20
+        + internal_marks * 0.40
+        + assignment * 0.20
+    )
+
+    # Final score
+    # 80% current performance
+    # 20% previous performance
+
+    final_score = (
+        performance_score * 0.80
+        + previous_performance * 0.20
+    )
+
+    # PERFORMANCE PREDICTION
+
+    if final_score >= 80:
+
+        performance = "EXCELLENT"
+        risk = "LOW"
+
+        recommendation = (
+            "Excellent performance! Maintain your current "
+            "study pattern and continue regular practice."
+        )
+
+        result_frame.configure(
+            bg=LIGHT_GREEN
+        )
+
+        output_prediction.configure(
+            bg=LIGHT_GREEN,
+            fg=GREEN
+        )
+
+        output_risk.configure(
+            bg=LIGHT_GREEN,
+            fg=GREEN
+        )
+
+        output_recommendation.configure(
+            bg=LIGHT_GREEN,
+            fg=DARK
+        )
+
+    elif final_score >= 65:
+
+        performance = "GOOD"
+        risk = "LOW"
+
+        recommendation = (
+            "Good performance. Maintain attendance "
+            "and continue regular study."
+        )
+
+        result_frame.configure(
+            bg=LIGHT_BLUE
+        )
+
+        output_prediction.configure(
+            bg=LIGHT_BLUE,
+            fg=BLUE
+        )
+
+        output_risk.configure(
+            bg=LIGHT_BLUE,
+            fg=BLUE
+        )
+
+        output_recommendation.configure(
+            bg=LIGHT_BLUE,
+            fg=DARK
+        )
+
+    elif final_score >= 50:
+
+        performance = "AVERAGE"
+        risk = "MEDIUM"
+
+        recommendation = (
+            "Increase study hours and improve "
+            "assignment completion."
+        )
+
+        result_frame.configure(
+            bg=LIGHT_ORANGE
+        )
+
+        output_prediction.configure(
+            bg=LIGHT_ORANGE,
+            fg=ORANGE
+        )
+
+        output_risk.configure(
+            bg=LIGHT_ORANGE,
+            fg=ORANGE
+        )
+
+        output_recommendation.configure(
+            bg=LIGHT_ORANGE,
+            fg=DARK
+        )
+
+    else:
+
+        performance = "AT RISK"
+        risk = "HIGH"
+
+        recommendation = (
+            "Improve attendance, study hours, "
+            "and assignment completion."
+        )
+
+        result_frame.configure(
+            bg=LIGHT_RED
+        )
+
+        output_prediction.configure(
+            bg=LIGHT_RED,
+            fg=RED
+        )
+
+        output_risk.configure(
+            bg=LIGHT_RED,
+            fg=RED
+        )
+
+        output_recommendation.configure(
+            bg=LIGHT_RED,
+            fg=DARK
+        )
+
+    # DISPLAY RESULT
+
+    output_prediction.config(
+        text=f"Prediction: {performance}\n"
+             f"Performance Score: {final_score:.2f}%"
+    )
+
+    output_risk.config(
+        text=f"Risk Level: {risk}"
+    )
+
+    output_recommendation.config(
+        text=f"Recommendation:\n{recommendation}"
+    )
+
+
+# CLEAR FUNCTION
 
 def clear():
+
     entry_student_id.delete(0, tk.END)
     entry_name.delete(0, tk.END)
+
     entry_attendance.delete(0, tk.END)
     entry_study_hours.delete(0, tk.END)
     entry_internal_marks.delete(0, tk.END)
     entry_assignment.delete(0, tk.END)
     entry_previous_performance.delete(0, tk.END)
 
-    output_prediction.config(
+    result_frame.configure(
+        bg=WHITE
+    )
+
+    output_prediction.configure(
         text="Prediction: Waiting for input...",
-        fg=DARK,
-        bg=WHITE
+        bg=WHITE,
+        fg=DARK
     )
 
-    output_risk.config(
+    output_risk.configure(
         text="Risk Level: -",
-        fg=DARK,
-        bg=WHITE
+        bg=WHITE,
+        fg=DARK
     )
 
-    output_recommendation.config(
+    output_recommendation.configure(
         text="Recommendation: -",
-        fg=DARK,
-        bg=WHITE
+        bg=WHITE,
+        fg=DARK
     )
 
-    result_frame.configure(bg=WHITE)
 
+# EXIT FUNCTION
 
 def exit_app():
     root.destroy()
 
 
-# =========================
-# Main Heading
-# =========================
+# HEADER
 
-heading = tk.Label(
+header_frame = tk.Frame(
     root,
-    text="SMART STUDENT PERFORMANCE PREDICTION SYSTEM",
-    font=("Arial", 22, "bold"),
-    bg=BG_COLOR,
-    fg=DARK
+    bg=BLUE,
+    height=90
 )
 
-heading.pack(pady=(20, 5))
+header_frame.pack(
+    fill="x"
+)
+
+header_frame.pack_propagate(False)
+
+
+heading = tk.Label(
+    header_frame,
+    text="SMART STUDENT PERFORMANCE",
+    font=("Arial", 22, "bold"),
+    bg=BLUE,
+    fg=WHITE
+)
+
+heading.pack(
+    pady=(15, 0)
+)
 
 
 subtitle = tk.Label(
-    root,
-    text="Student Academic Performance Analysis",
-    font=("Arial", 11),
-    bg=BG_COLOR,
-    fg="#607d8b"
+    header_frame,
+    text="Prediction & Academic Performance Analysis System",
+    font=("Arial", 10),
+    bg=BLUE,
+    fg="#D6EAF8"
 )
 
-subtitle.pack(pady=(0, 15))
+subtitle.pack(
+    pady=3
+)
 
 
-# =========================
-# Main Content
-# =========================
+# MAIN CONTENT
 
 content_frame = tk.Frame(
     root,
@@ -270,22 +382,20 @@ content_frame = tk.Frame(
 
 content_frame.pack(
     padx=30,
-    fill="x"
+    pady=20
 )
 
 
-# =========================
-# Student Information Frame
-# =========================
+# STUDENT INFORMATION
 
 student_frame = tk.LabelFrame(
     content_frame,
     text="  Student Information  ",
     font=("Arial", 13, "bold"),
     bg=WHITE,
-    fg=BLUE,
-    bd=1,
-    relief="solid",
+    fg=PURPLE,
+    bd=2,
+    relief="groove",
     padx=20,
     pady=15
 )
@@ -299,22 +409,24 @@ student_frame.grid(
 
 
 # Student ID
+
 tk.Label(
     student_frame,
     text="Student ID",
-    font=("Arial", 11),
+    font=("Arial", 11, "bold"),
     bg=WHITE,
     fg=DARK
 ).grid(
     row=0,
     column=0,
     sticky="w",
-    pady=8
+    pady=10
 )
+
 
 entry_student_id = tk.Entry(
     student_frame,
-    width=28,
+    width=25,
     font=("Arial", 11),
     relief="solid",
     bd=1
@@ -324,27 +436,29 @@ entry_student_id.grid(
     row=0,
     column=1,
     padx=(20, 0),
-    pady=8
+    pady=10
 )
 
 
 # Name
+
 tk.Label(
     student_frame,
     text="Name",
-    font=("Arial", 11),
+    font=("Arial", 11, "bold"),
     bg=WHITE,
     fg=DARK
 ).grid(
     row=1,
     column=0,
     sticky="w",
-    pady=8
+    pady=10
 )
+
 
 entry_name = tk.Entry(
     student_frame,
-    width=28,
+    width=25,
     font=("Arial", 11),
     relief="solid",
     bd=1
@@ -354,13 +468,11 @@ entry_name.grid(
     row=1,
     column=1,
     padx=(20, 0),
-    pady=8
+    pady=10
 )
 
 
-# =========================
-# Academic Information Frame
-# =========================
+# ACADEMIC INFORMATION
 
 academic_frame = tk.LabelFrame(
     content_frame,
@@ -368,8 +480,8 @@ academic_frame = tk.LabelFrame(
     font=("Arial", 13, "bold"),
     bg=WHITE,
     fg=BLUE,
-    bd=1,
-    relief="solid",
+    bd=2,
+    relief="groove",
     padx=20,
     pady=15
 )
@@ -381,14 +493,19 @@ academic_frame.grid(
 )
 
 
+# Academic Field Function
+
 def create_academic_field(row, label_text):
-    tk.Label(
+
+    label = tk.Label(
         academic_frame,
         text=label_text,
-        font=("Arial", 11),
+        font=("Arial", 10, "bold"),
         bg=WHITE,
         fg=DARK
-    ).grid(
+    )
+
+    label.grid(
         row=row,
         column=0,
         sticky="w",
@@ -397,8 +514,8 @@ def create_academic_field(row, label_text):
 
     entry = tk.Entry(
         academic_frame,
-        width=22,
-        font=("Arial", 11),
+        width=20,
+        font=("Arial", 10),
         relief="solid",
         bd=1
     )
@@ -406,12 +523,14 @@ def create_academic_field(row, label_text):
     entry.grid(
         row=row,
         column=1,
-        padx=(20, 0),
+        padx=(15, 0),
         pady=6
     )
 
     return entry
 
+
+# Academic Inputs
 
 entry_attendance = create_academic_field(
     0,
@@ -439,29 +558,31 @@ entry_previous_performance = create_academic_field(
 )
 
 
-# =========================
-# Buttons
-# =========================
+# BUTTONS
 
 button_frame = tk.Frame(
     root,
     bg=BG_COLOR
 )
 
-button_frame.pack(pady=18)
+button_frame.pack(
+    pady=5
+)
 
+
+# Predict Button
 
 submit_btn = tk.Button(
     button_frame,
     text="Predict Performance",
     command=submit,
     bg=BLUE,
-    fg="white",
-    activebackground="#1565c0",
-    activeforeground="white",
+    fg=WHITE,
+    activebackground="#0D47A1",
+    activeforeground=WHITE,
     font=("Arial", 11, "bold"),
     width=20,
-    height=1,
+    height=2,
     relief="flat",
     cursor="hand2"
 )
@@ -473,17 +594,19 @@ submit_btn.grid(
 )
 
 
+# Clear Button
+
 clear_btn = tk.Button(
     button_frame,
     text="Clear",
     command=clear,
-    bg=GREEN,
-    fg="white",
-    activebackground="#1b5e20",
-    activeforeground="white",
+    bg=ORANGE,
+    fg=WHITE,
+    activebackground="#E65100",
+    activeforeground=WHITE,
     font=("Arial", 11, "bold"),
     width=12,
-    height=1,
+    height=2,
     relief="flat",
     cursor="hand2"
 )
@@ -495,17 +618,19 @@ clear_btn.grid(
 )
 
 
+# Exit Button
+
 exit_btn = tk.Button(
     button_frame,
     text="Exit",
     command=exit_app,
     bg=RED,
-    fg="white",
-    activebackground="#b71c1c",
-    activeforeground="white",
+    fg=WHITE,
+    activebackground="#8E0000",
+    activeforeground=WHITE,
     font=("Arial", 11, "bold"),
     width=12,
-    height=1,
+    height=2,
     relief="flat",
     cursor="hand2"
 )
@@ -517,28 +642,30 @@ exit_btn.grid(
 )
 
 
-# =========================
-# Prediction Result
-# =========================
+# PREDICTION RESULT TITLE
 
 result_title = tk.Label(
     root,
     text="Prediction Result",
     font=("Arial", 15, "bold"),
     bg=BG_COLOR,
-    fg=DARK
+    fg=PURPLE
 )
 
-result_title.pack(pady=(5, 8))
+result_title.pack(
+    pady=(12, 8)
+)
 
+
+# RESULT FRAME
 
 result_frame = tk.Frame(
     root,
     bg=WHITE,
-    bd=1,
-    relief="solid",
-    padx=25,
-    pady=15
+    bd=2,
+    relief="groove",
+    padx=30,
+    pady=12
 )
 
 result_frame.pack(
@@ -546,6 +673,8 @@ result_frame.pack(
     fill="x"
 )
 
+
+# Prediction
 
 output_prediction = tk.Label(
     result_frame,
@@ -557,9 +686,11 @@ output_prediction = tk.Label(
 )
 
 output_prediction.pack(
-    pady=5
+    pady=4
 )
 
+
+# Risk
 
 output_risk = tk.Label(
     result_frame,
@@ -570,9 +701,11 @@ output_risk = tk.Label(
 )
 
 output_risk.pack(
-    pady=5
+    pady=4
 )
 
+
+# Recommendation
 
 output_recommendation = tk.Label(
     result_frame,
@@ -585,30 +718,24 @@ output_recommendation = tk.Label(
 )
 
 output_recommendation.pack(
-    pady=5
+    pady=4
 )
 
 
-# =========================
-# Footer
-# =========================
-
+# FOOTER
 footer = tk.Label(
     root,
     text="Smart Academic Analysis System",
     font=("Arial", 9),
     bg=BG_COLOR,
-    fg="#78909c"
+    fg=GRAY
 )
 
 footer.pack(
-    pady=12
+    pady=10
 )
 
 
-# =========================
-# Start Application
-# =========================
+# RUN APPLICATION
 
 root.mainloop()
-
